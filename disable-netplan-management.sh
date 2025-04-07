@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "This script is created by Kaled Aljebur to enable Netplan"
+echo "This script is created by Kaled Aljebur to disable Netplan"
 echo "network managment in LinuxMint for teaching in my classes."
 
 #Disable systemd-networkd to manage networking
