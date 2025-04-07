@@ -2,22 +2,24 @@
 
 echo "This script is created by Kaled Aljebur to enable Netplan"
 echo "network managment in LinuxMint for teaching in my classes."
-#Disable NetworkManager
-echo "Disable NetworkManager..."
-sudo systemctl stop NetworkManager
-sudo systemctl disable NetworkManager
 
-#Enable systemd-networkd to manage networking
+#Disable systemd-networkd to manage networking
 echo "Enabling systemd-networkd for network management..."
-sudo systemctl enable systemd-networkd
-sudo systemctl start systemd-networkd
+sudo systemctl stop systemd-networkd
+sudo systemctl disable systemd-networkd
 
-#Rename the available profile, unlike NetworManager, Netplan only working with .yaml, not .yml
-sudo mv /etc/netplan/01-network-manager-all.yml /etc/netplan/01-network-manager-all.yaml
+#Enable NetworkManager
+echo "Disable NetworkManager..."
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
 
-#Edit the Netplan YAML profile
+
+#Rename back the available profile, unlike Netplan, NetworManager only working with .yml, not .yaml
+sudo mv /etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yml
+
+#Edit the Netplan YAML profile, but it will not impact NetworkManager
 echo "Create Netplan YAML progfile..."
-sudo tee /etc/netplan/01-network-manager-all.yaml > /dev/null <<EOF
+sudo tee /etc/netplan/01-network-manager-all.yml > /dev/null <<EOF
 # Create by Kaled Aljebur as a sample and tested in VMware enviroment.
 network:
   version: 2
@@ -34,9 +36,8 @@ network:
         addresses: [192.168.8.2]
 EOF
 
-#Apply the Netplan profile
-echo "Apply the Netplan profile..."
-sudo netplan apply
+#Ask for DHCP IP
+sudo dhclient
 
 #List the new IP settings
 echo "List the new IP settings..."
