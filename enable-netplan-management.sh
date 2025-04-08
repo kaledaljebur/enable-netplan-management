@@ -38,6 +38,10 @@ EOF
 echo "Apply the Netplan profile..."
 sudo netplan apply
 
+#Pause to get the changes applied
+echo "Waiting the changes to be applied..."
+sleep 3
+
 #List the new IP settings
 echo "List the new IP settings..."
 ip a sh ens33
