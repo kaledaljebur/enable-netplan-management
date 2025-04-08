@@ -36,6 +36,10 @@ network:
         addresses: [192.168.8.2]
 EOF
 
+#Pause to get the changes applied
+echo "Waiting the get DHCP IP..."
+sleep 3
+
 #Ask for DHCP IP
 sudo dhclient
 
